@@ -15,6 +15,18 @@ Exact request and response examples live in **[API.md](API.md)**. Read that file
 
 ---
 
+## Live demo
+
+- **Frontend**: https://shivendra2008.github.io/team_apex_SIH/ (deployed automatically from
+  `frontend/` via [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml)
+  on every push to `main` — requires enabling **Settings → Pages → Source: GitHub Actions**
+  once in the repo).
+- **Backend**: https://kissan-setu-backend.onrender.com (real WhatsApp Business API wired up;
+  see [backend/README.md](backend/README.md)).
+
+`frontend/config.js` already points `apiBase` at the Render backend with `useMock: false`, so
+the Pages deployment talks to the live server out of the box.
+
 ## Backend status
 
 A FastAPI server now lives in `backend/`, implementing auth (`send-otp` / `verify-otp`) and
