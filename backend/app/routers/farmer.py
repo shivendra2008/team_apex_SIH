@@ -19,11 +19,14 @@ def update_me(body: UpdateMeRequest, farmer: StoreFarmer = Depends(require_farme
     return farmer.to_dict()
 
 
+# Crops/centres are public reference data (MSP rates, centre names) — the
+# frontend's boot() loads them before login finishes to pre-render the
+# crop picker, so these can't require a bearer token.
 @router.get("/crops")
-def list_crops(farmer: StoreFarmer = Depends(require_farmer)):
+def list_crops():
     return CROPS
 
 
 @router.get("/centres")
-def list_centres(farmer: StoreFarmer = Depends(require_farmer)):
+def list_centres():
     return CENTRES
