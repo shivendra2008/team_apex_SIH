@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kissan Setu — UI Design (SIH 2026, PS 26032)</title>
+  <meta name="description"
+    content="Kissan Setu: slot booking and live queue for procurement centres. Farmer app, centre staff and district admin prototype." />
+  <meta name="theme-color" content="#e1720b" />
+  <link rel="icon" href="app-icon.png" />
+  <link rel="apple-touch-icon" href="app-icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ================= APP BAR ================= -->
+  <header class="appbar">
+    <div class="brand">
+      <span class="mark"><img src="app-icon.png" alt="Kissan Setu" /></span>
+      <span class="words">
+        <b>Kissan Setu</b>
+        <span>किसान सेतु</span>
+      </span>
+    </div>
+
+    <div class="personas">
+      <button class="persona-btn active" data-view="farmer">Farmer App</button>
+      <button class="persona-btn" data-view="staff">Centre Staff</button>
+      <button class="persona-btn" data-view="admin">District Admin</button>
+    </div>
+
+    <div class="appbar-right">
+      <select class="lang-select" id="langSelect">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="pa">ਪੰਜਾਬੀ</option>
+      </select>
+      <span class="api-tag" id="apiTag">Mock data</span>
+      <span class="ps-tag">PS 26032</span>
+    </div>
+  </header>
+
+  <main class="stage">
+
+    <!-- ================= FARMER ================= -->
+    <section class="view active" id="view-farmer">
+      <div class="farmer-stage">
+
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="load-veil" id="phoneVeil" hidden><span class="spin"></span></div>
+            <div class="notch"></div>
+
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>4G &nbsp;&#9679;&#9679;&#9679;&nbsp; 82%</span>
+            </div>
+
+            <div class="phone-body">
+
+              <!-- ======== 01 · REGISTRATION ======== -->
+              <div class="screen active" id="scr-login">
+                <div style="height:20px"></div>
+                <div class="brand" style="margin-bottom:18px">
+                  <span class="mark" style="width:62px;height:62px;border-radius:19px">
+                    <img src="app-icon.png" alt="Kissan Setu" />
+                  </span>
+                  <span class="words">
+                    <b style="font-size:24px">Kissan Setu</b>
+                    <span>किसान सेतु</span>
+                  </span>
+                </div>
+
+                <div class="scr-title" data-i18n="loginTitle">Sell your crop without the queue</div>
+                <div class="scr-sub" data-i18n="loginSub">Book your time at the procurement centre. We will tell you
+                  when to come.</div>
+
+                <button class="voice-btn" data-speak="loginTitle">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M11 5 6 9H3v6h3l5 4V5z" />
+                    <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                  </svg>
+                  <span data-i18n="listen">Listen</span>
+                </button>
+
+                <div class="field">
+                  <label data-i18n="mobile">Mobile number</label>
+                  <div class="input-prefix" id="mobileWrap">
+                    <span>+91</span>
+                    <input class="input" id="mobileInput" type="tel" inputmode="numeric" autocomplete="tel"
+                      maxlength="10" placeholder="98765 43210" />
+                  </div>
+                  <div class="field-foot">
+                    <span class="fld-err" id="mobileErr"></span>
+                    <span class="count" id="mobileCount">0/10</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label data-i18n="aadhaar">Aadhaar number</label>
+                  <input class="input" id="aadhaarInput" type="text" inputmode="numeric" maxlength="14"
+                    placeholder="1234 5678 4821" />
+                  <div class="field-foot">
+                    <span class="fld-err" id="aadhaarErr"></span>
+                    <span class="count" id="aadhaarCount">0/12</span>
+                  </div>
+                </div>
+
+                <button class="btn off" id="sendOtpBtn" aria-disabled="true">
+                  <span data-i18n="sendOtp">Send OTP</span>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </button>
+                <p class="hint" data-i18n="loginHint">We only keep the last 4 digits of your Aadhaar.</p>
+              </div>
+
+              <div class="screen" id="scr-otp">
+                <div style="height:20px"></div>
+                <button class="back-link" data-goto="scr-login">&#8592; <span data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="otpTitle">Enter the 4-digit code</div>
+                <div class="scr-sub"><span data-i18n="otpSub">Sent by SMS to</span> <b id="otpNumber">+91 98765
+                    43210</b></div>
+
+                <div class="otp-row" id="otpRow">
+                  <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+                  <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+                  <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+                  <input class="otp-box" type="tel" inputmode="numeric" maxlength="1" />
+                </div>
+                <div class="fld-err" id="otpErr" style="text-align:center;margin-bottom:12px"></div>
+
+                <button class="btn off" id="verifyBtn" aria-disabled="true">
+                  <span data-i18n="verify">Verify and continue</span>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </button>
+                <p class="hint" id="resendHint">Did not get it? Resend in <b id="resendTimer">00:24</b></p>
+              </div>
+
+              <!-- ======== HOME ======== -->
+              <div class="screen" id="scr-home">
+                <div class="greet">
+                  <div class="avatar" id="farmerAvatar">RS</div>
+                  <div>
+                    <div class="who" id="farmerName">Ramesh Singh</div>
+                    <div class="where" id="farmerPlace">Kheri Village, Karnal</div>
+                  </div>
+                  <button class="tile" data-goto="scr-settings"
+                    style="margin-left:auto;padding:9px;border-radius:12px;width:42px;height:42px;display:grid;place-items:center">
+                    <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--earth-600);fill:none;
+                      stroke-width:2;stroke-linecap:round">
+                      <circle cx="12" cy="12" r="3.2" />
+                      <path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1
+                        2 2 0 1 1-4 0 1.6 1.6 0 0 0-2.7-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 15
+                        a2 2 0 1 1 0-4 1.6 1.6 0 0 0 1.1-2.7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 4.6
+                        a2 2 0 1 1 4 0 1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7
+                        2 2 0 1 1 0 4 1.6 1.6 0 0 0-1.2 1z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- 02 token · 03 wait -->
+                <button class="token-card" id="homeToken" data-goto="scr-queue"
+                  style="display:block;width:100%;text-align:left">
+                  <div class="lbl" data-i18n="yourToken">Your token today</div>
+                  <div class="tok" id="homeTok">A-042</div>
+                  <div class="meta">
+                    <span data-token-centre>Karnal Mandi, Gate 2</span><br />
+                    <span data-i18n="slot">Slot</span> <span data-token-slot>11:00 &ndash; 11:45</span>
+                  </div>
+                  <div class="divider"></div>
+                  <div class="wait">
+                    <span class="clock">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7v5l3 2" />
+                      </svg>
+                    </span>
+                    <span>
+                      <b id="homeWaitMin">~35 min</b>
+                      <span data-i18n="waitNow">6 farmers ahead &middot; tap to see the queue</span>
+                    </span>
+                  </div>
+                </button>
+
+                <!-- shown instead of the token card once a booking is cancelled -->
+                <button class="alert-strip" id="homeNoToken" data-goto="scr-centres" data-tab="book"
+                  style="display:none;width:100%;text-align:left">
+                  <span class="ic">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="3" y="5" width="18" height="16" rx="2.4" />
+                      <path d="M3 10h18M8 3v4M16 3v4M12 14v4M10 16h4" />
+                    </svg>
+                  </span>
+                  <span class="tx">
+                    <b data-i18n="noTokenTitle">No booking right now</b>
+                    <span data-i18n="noTokenSub">Tap here to pick a centre and a time for your next trip.</span>
+                  </span>
+                </button>
+
+                <button class="voice-btn" data-speak="tokenSpeak">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M11 5 6 9H3v6h3l5 4V5z" />
+                    <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                  </svg>
+                  <span data-i18n="listenToken">Listen to my token details</span>
+                </button>
+
+                <!-- 07 weather -->
+                <button class="alert-strip" data-goto="scr-weather" style="width:100%;text-align:left">
+                  <span class="ic">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M16 13.5A4.5 4.5 0 0 0 13 5.5a6 6 0 0 0-11.2 2.2A3.6 3.6 0 0 0 3 14.5" />
+                      <path d="M8 17.5v3M12 16v4.5M16 17.5v3" />
+                    </svg>
+                  </span>
+                  <span class="tx">
+                    <b data-i18n="rainTitle">Rain expected Thursday</b>
+                    <span data-i18n="rainBody">Slots on 27 Aug moved to 28 Aug. Your booking has not changed.</span>
+                  </span>
+                </button>
+
+                <div class="sect-label" data-i18n="quickActions">What do you want to do?</div>
+                <div class="tiles">
+                  <button class="tile" data-goto="scr-crop" data-tab="book">
+                    <div class="ic ic-saffron">
+                      <svg viewBox="0 0 24 24">
+                        <rect x="3" y="5" width="18" height="16" rx="2.4" />
+                        <path d="M3 10h18M8 3v4M16 3v4M12 13v5M9.5 15.5h5" />
+                      </svg>
+                    </div>
+                    <div class="t" data-i18n="bookSlot">Book my slot</div>
+                    <div class="d" data-i18n="bookSlotSub">Crop, quantity, centre</div>
+                  </button>
+
+                  <button class="tile" data-goto="scr-map" data-tab="book">
+                    <div class="ic ic-leaf">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M12 21s-7-5.2-7-10a7 7 0 1 1 14 0c0 4.8-7 10-7 10z" />
+                        <circle cx="12" cy="11" r="2.6" />
+                      </svg>
+                    </div>
+                    <div class="t" data-i18n="mapView">Map of centres</div>
+                    <div class="d" data-i18n="mapViewSub">See them on a map</div>
+                  </button>
+
+                  <button class="tile" data-goto="scr-token" data-tab="token">
+                    <div class="ic ic-sky">
+                      <svg viewBox="0 0 24 24">
+                        <rect x="3" y="3" width="7" height="7" rx="1.4" />
+                        <rect x="14" y="3" width="7" height="7" rx="1.4" />
+                        <rect x="3" y="14" width="7" height="7" rx="1.4" />
+                        <path d="M14 14h3v3h-3zM19 19h2v2h-2z" />
+                      </svg>
+                    </div>
+                    <div class="t" data-i18n="showToken">My token</div>
+                    <div class="d" data-i18n="showTokenSub">QR for the gate</div>
+                  </button>
+
+                  <button class="tile" data-goto="scr-track" data-tab="track">
+                    <div class="ic ic-leaf">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M20 4c0 8-5 12-11 12H5" />
+                        <path d="M4 20c0-5 3-8 8-8" />
+                      </svg>
+                    </div>
+                    <div class="t" data-i18n="trackLot">Track my crop</div>
+                    <div class="d" data-i18n="trackLotSub">Grading to weighing</div>
+                  </button>
+
+                  <button class="tile" data-goto="scr-payment" data-tab="track">
+                    <div class="ic ic-clay">
+                      <svg viewBox="0 0 24 24">
+                        <rect x="2" y="5" width="20" height="14" rx="2.4" />
+                        <path d="M2 10h20M6 15h4" />
+                      </svg>
+                    </div>
+                    <div class="t" data-i18n="payment">My payment</div>
+                    <div class="d" data-i18n="paymentSub">MSP and bank credit</div>
+                  </button>
+
+                  <button class="tile" data-goto="scr-cancel" data-tab="token">
+                    <div class="ic ic-saffron">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M9 9l6 6M15 9l-6 6" />
+                      </svg>
+                    </div>
+                    <div class="t" data-i18n="cancelTile">Cancel booking</div>
+                    <div class="d" data-i18n="cancelTileSub">Free it for others</div>
+                  </button>
+                </div>
+
+                <div class="sect-label" data-i18n="nearYou">Centres near you</div>
+                <div id="homeCentres"></div>
+              </div>
+
+              <!-- ======== 02 · BOOK A SLOT, STEP 1 OF 4: CROP ======== -->
+              <div class="screen" id="scr-crop">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-home" data-tab="home">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="steps" data-step="1">
+                  <span></span><i></i><span></span><i></i><span></span><i></i><span></span>
+                </div>
+                <div class="scr-title" data-i18n="cropTitle">Which crops are you selling?</div>
+                <div class="scr-sub" data-i18n="cropSub">Tap every crop you are bringing. You can pick more than one.
+                  The rate shown is this season's MSP for one quintal.</div>
+                <div class="crop-grid" id="cropGrid"></div>
+                <div class="sticky-cta">
+                  <button class="btn" id="cropNextBtn">
+                    <span id="cropCount">Continue</span>
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- ======== 02 · BOOK A SLOT, STEP 2 OF 4: QUANTITY ======== -->
+              <div class="screen" id="scr-qty">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-crop" data-tab="book">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="steps" data-step="2">
+                  <span></span><i></i><span></span><i></i><span></span><i></i><span></span>
+                </div>
+                <div class="scr-title" data-i18n="qtyTitle">How much of each are you bringing?</div>
+                <div class="scr-sub" data-i18n="qtySub">One quintal is 100 kilograms.</div>
+
+                <div id="qtyList"></div>
+
+                <div class="sticky-cta">
+                  <div class="est-card compact">
+                    <div class="txt">
+                      <div class="lbl" data-i18n="estimate">You should receive about</div>
+                      <div class="sub" id="qtyCalc">20 quintal in total</div>
+                    </div>
+                    <div class="amt" id="qtyAmount">&#8377; 50,420</div>
+                  </div>
+                  <button class="btn" id="qtyNextBtn">
+                    <span data-i18n="chooseCentreCta">Choose a centre</span>
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- ======== 03 · CENTRE LIST with live wait ======== -->
+              <div class="screen" id="scr-centres">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-qty" data-tab="book">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="steps" data-step="3">
+                  <span></span><i></i><span></span><i></i><span></span><i></i><span></span>
+                </div>
+                <div class="scr-title" data-i18n="chooseCentre">Choose a centre</div>
+                <div class="scr-sub" data-i18n="chooseCentreSub">Nearest first. Waiting time is live.</div>
+                <button class="btn ghost" data-goto="scr-map" style="margin-bottom:16px">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 21s-7-5.2-7-10a7 7 0 1 1 14 0c0 4.8-7 10-7 10z" />
+                    <circle cx="12" cy="11" r="2.6" />
+                  </svg>
+                  <span data-i18n="seeOnMap">See on map</span>
+                </button>
+                <div id="centreList"></div>
+              </div>
+
+              <!-- ======== 10 · GOOGLE MAPS LOCATOR ======== -->
+              <div class="screen" id="scr-map">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-centres">&#8592; <span data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="mapTitle">Centres near you</div>
+                <div class="scr-sub" data-i18n="mapSub">Blue dot is you. Tap a pin to book that centre.</div>
+
+                <div class="map-wrap">
+                  <svg class="roads" viewBox="0 0 340 290" preserveAspectRatio="none">
+                    <rect width="340" height="290" fill="#eef4e6" />
+                    <rect x="18" y="20" width="80" height="52" rx="5" fill="#e3edd6" />
+                    <rect x="215" y="35" width="95" height="60" rx="5" fill="#e3edd6" />
+                    <rect x="40" y="195" width="105" height="70" rx="5" fill="#e3edd6" />
+                    <rect x="230" y="200" width="85" height="62" rx="5" fill="#e3edd6" />
+                    <path d="M-5 118 H345" stroke="#faf3e6" stroke-width="17" />
+                    <path d="M170 -5 V295" stroke="#faf3e6" stroke-width="15" />
+                    <path d="M-5 205 H345" stroke="#fdf9f0" stroke-width="9" />
+                    <path d="M65 -5 V295" stroke="#fdf9f0" stroke-width="8" />
+                    <path d="M262 -5 V295" stroke="#fdf9f0" stroke-width="8" />
+                    <path d="M-5 250 C 90 232, 175 275, 345 245" stroke="#cfe4ef" stroke-width="11" fill="none" />
+                  </svg>
+
+                  <div class="map-you" style="left:50%;top:64%"></div>
+                  <div id="mapPins"></div>
+                </div>
+
+                <div class="map-legend">
+                  <div><i style="background:var(--leaf-600)"></i> <span data-i18n="lgFree">Short wait</span></div>
+                  <div><i style="background:var(--saffron-500)"></i> <span data-i18n="lgBusy">Busy</span></div>
+                  <div><i style="background:var(--clay-600)"></i> <span data-i18n="lgFull">Very crowded</span></div>
+                </div>
+
+                <button class="btn ghost" data-i18n="openGmaps">Open directions in Google Maps</button>
+              </div>
+
+              <!-- ======== 02 · SLOT BOOKING ======== -->
+              <div class="screen" id="scr-slots">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-centres">&#8592; <span data-i18n="back">Back</span></button>
+                <div class="steps" data-step="4">
+                  <span></span><i></i><span></span><i></i><span></span><i></i><span></span>
+                </div>
+                <div class="scr-title" id="slotCentreName">Karnal Grain Mandi</div>
+                <div class="scr-sub"><span data-i18n="pickSlot">Pick a day and a time</span> &middot; <span
+                    id="slotCropNote">Wheat, 20 quintal</span></div>
+                <div class="date-strip" id="dateStrip"></div>
+                <div id="slotList"></div>
+                <div class="sticky-cta">
+                  <button class="btn" id="confirmSlotBtn">
+                    <span data-i18n="confirmBooking">Confirm my booking</span>
+                    <svg viewBox="0 0 24 24">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- ======== 02 · TOKEN + QR ======== -->
+              <div class="screen" id="scr-token">
+                <div style="height:12px"></div>
+                <div class="scr-title" data-i18n="tokenTitle">Your gate pass</div>
+                <div class="scr-sub" data-i18n="tokenSub">Show this at the centre gate. Also sent on WhatsApp.</div>
+
+                <div class="qr-wrap">
+                  <canvas id="qrCanvas" width="37" height="37"></canvas>
+                  <div class="tlbl" data-i18n="tokenNo">Token number</div>
+                  <div class="tno">A-042</div>
+                </div>
+
+                <div class="kv"><span class="k" data-i18n="centre">Centre</span><span class="v"
+                    data-token-centre>Karnal Mandi, Gate 2</span></div>
+                <div class="kv"><span class="k" data-i18n="date">Date</span><span class="v" data-token-day>Tue 25
+                    Aug</span></div>
+                <div class="kv"><span class="k" data-i18n="slot">Slot</span><span class="v" data-token-slot>11:00
+                    &ndash; 11:45</span></div>
+                <div class="kv"><span class="k" data-i18n="crop">Crop</span><span class="v" data-token-crop>Wheat
+                    &middot; 42 quintal</span></div>
+                <div class="kv"><span class="k" data-i18n="status">Status</span><span class="v"><span
+                      class="pill green" id="tokenStatusPill" data-i18n="confirmed">Confirmed</span></span></div>
+
+                <div style="height:16px"></div>
+                <button class="btn ghost" data-goto="scr-queue" id="seeQueueBtn">
+                  <span data-i18n="seeQueue">See the live queue</span>
+                </button>
+                <div style="height:10px"></div>
+                <button class="btn ghost" data-goto="scr-cancel" id="cancelEntryBtn" data-i18n="cancelBooking">Cancel my
+                  booking</button>
+                <div style="height:10px"></div>
+                <button class="btn" id="rebookBtn" data-goto="scr-centres" data-tab="book" style="display:none">
+                  <span data-i18n="bookAgain">Book a new slot</span>
+                  <svg viewBox="0 0 24 24">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- ======== 03 · LIVE QUEUE / WAITING TIME ======== -->
+              <div class="screen" id="scr-queue">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-home" data-tab="home">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="queueTitle">Live queue</div>
+                <div class="scr-sub" data-i18n="queueSub">Karnal Mandi, Gate 2 &middot; updates every minute</div>
+
+                <div class="queue-hero">
+                  <div class="lbl" data-i18n="yourPosition">Your position</div>
+                  <div class="pos" id="queuePos">7</div>
+                  <div class="of" data-i18n="ofInQueue">of 13 farmers in the queue</div>
+                  <div class="eta" id="queueEta" data-i18n="reachCounter">You should reach the counter around 11:38 AM</div>
+                </div>
+
+                <div class="now-serving">
+                  <div>
+                    <div class="cap" data-i18n="nowServing">Now at the counter</div>
+                    <div class="big" id="nowServingTok">A-036</div>
+                  </div>
+                  <div style="margin-left:auto;text-align:right">
+                    <div class="cap" data-i18n="avgPerFarmer">Average per farmer</div>
+                    <div class="big" id="queueAvg">5 min</div>
+                  </div>
+                </div>
+
+                <div class="sect-label" data-i18n="aheadOfYou">Ahead of you</div>
+                <div id="queuePreview"></div>
+
+                <p class="hint" data-i18n="queueHint">Waiting time is calculated from how long the last 10 farmers
+                  actually took at this centre.</p>
+              </div>
+
+              <!-- ======== 05 · STAGE TRACKER ======== -->
+              <div class="screen" id="scr-track">
+                <div style="height:12px"></div>
+                <div class="scr-title" id="trackLotNo" data-i18n="trackTitle">Lot #KRL-2291</div>
+                <div class="scr-sub" id="trackLotSub" data-i18n="trackSub">Wheat &middot; 42 quintal &middot; Karnal Mandi</div>
+
+                <button class="voice-btn" data-speak="trackSpeak">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M11 5 6 9H3v6h3l5 4V5z" />
+                    <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+                  </svg>
+                  <span data-i18n="listenStatus">Listen to my status</span>
+                </button>
+
+                <div class="timeline">
+                  <div class="tl-item done">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="stArrived">Reached the centre</div>
+                    <div class="ts">25 Aug, 11:04 AM</div>
+                  </div>
+                  <div class="tl-item done">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="stGraded">Quality checked</div>
+                    <div class="ts">25 Aug, 11:26 AM</div>
+                    <div class="note" data-i18n="gradeNote">Grade A &middot; Moisture 11.2% &middot; within FAQ limits
+                    </div>
+                  </div>
+                  <div class="tl-item now">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.4" fill="currentColor" stroke="none" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="stWeighing">Weighing going on</div>
+                    <div class="ts" data-i18n="stWeighingTs">Started 11:38 AM &middot; about 10 minutes left</div>
+                  </div>
+                  <div class="tl-item todo">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.4" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="stAccepted">Accepted, receipt given</div>
+                    <div class="ts" data-i18n="pending">Not yet</div>
+                  </div>
+                  <div class="tl-item todo">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.4" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="stPaid">Money sent to bank</div>
+                    <div class="ts" data-i18n="pending">Not yet</div>
+                  </div>
+                </div>
+
+                <div style="height:18px"></div>
+                <button class="btn ghost" data-goto="scr-payment">
+                  <span data-i18n="seePayment">See my payment details</span>
+                </button>
+              </div>
+
+              <!-- ======== 06 · MSP & PAYMENT TRACKER ======== -->
+              <div class="screen" id="scr-payment">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-track">&#8592; <span data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="payTitle">My payment</div>
+                <div class="scr-sub" id="paySubLive" data-i18n="paySub">Lot #KRL-2291 &middot; Wheat &middot; Karnal Mandi</div>
+
+                <div class="pay-hero">
+                  <div class="lbl" data-i18n="youWillGet">You will receive</div>
+                  <div class="amt" id="payHero">&#8377; 1,05,882</div>
+                  <div class="sub" data-i18n="afterWeighing">Final amount after weighing is confirmed</div>
+                </div>
+
+                <div class="sect-label" data-i18n="howCalculated">How this is calculated</div>
+                <div id="payBreakdown">
+                  <div class="calc-row"><span class="k">Wheat &middot; 42.00 qtl &times; &#8377; 2,521</span><span
+                      class="v">&#8377; 1,05,882</span></div>
+                </div>
+                <div class="calc-row"><span class="k" data-i18n="grossAmt">Gross amount</span><span class="v"
+                    id="payGross">&#8377; 1,05,882</span></div>
+                <div class="calc-row"><span class="k" data-i18n="deductions">Deductions</span><span class="v">&#8377;
+                    0</span></div>
+                <div class="calc-row total"><span class="k" data-i18n="netPayable">Net payable</span><span class="v"
+                    id="payNet">&#8377; 1,05,882</span></div>
+
+                <div style="height:20px"></div>
+                <div class="sect-label" data-i18n="paymentProgress">Payment progress</div>
+                <div class="timeline">
+                  <div class="tl-item todo">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.4" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="payLotAccepted">Lot accepted at centre</div>
+                    <div class="ts" data-i18n="afterWeighingDone">After weighing finishes</div>
+                  </div>
+                  <div class="tl-item todo">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.4" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="payReceipt">e-Receipt generated</div>
+                    <div class="ts" data-i18n="pending">Not yet</div>
+                  </div>
+                  <div class="tl-item todo">
+                    <div class="bullet">
+                      <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3.4" />
+                      </svg>
+                    </div>
+                    <div class="st" data-i18n="paySentBank">Sent to bank through DBT</div>
+                    <div class="ts" data-i18n="pending">Not yet</div>
+                  </div>
+                </div>
+
+                <div style="height:16px"></div>
+                <div class="kv"><span class="k" data-i18n="bank">Bank</span><span class="v">PNB &middot;
+                    ****4471</span></div>
+                <div class="kv"><span class="k" data-i18n="status">Status</span><span class="v"><span class="pill amber"
+                      data-i18n="awaitingWeighing">After weighing</span></span></div>
+              </div>
+
+              <!-- ======== 07 · WEATHER RESCHEDULING ======== -->
+              <div class="screen" id="scr-weather">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-home" data-tab="home">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="wxTitle">Weather and slot changes</div>
+                <div class="scr-sub" data-i18n="wxSub">Karnal district &middot; from IMD forecast</div>
+
+                <div class="wx-hero">
+                  <div class="t" data-i18n="wxHeroT">Heavy rain on Thursday, 27 August</div>
+                  <div class="d" data-i18n="wxHeroD">24 mm expected. Grain can get wet and be rejected at grading, so
+                    that day's slots have been moved automatically.</div>
+                </div>
+
+                <div class="wx-grid">
+                  <div class="wx-day">
+                    <div class="dw">Tue</div>
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="4.4" />
+                      <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6 4.2 4.2M19.8 19.8l-1.4-1.4M5.6 18.4 4.2 19.8M19.8 4.2l-1.4 1.4" />
+                    </svg>
+                    <div class="mm">0 mm</div>
+                  </div>
+                  <div class="wx-day">
+                    <div class="dw">Wed</div>
+                    <svg viewBox="0 0 24 24">
+                      <path d="M17 17.5a4 4 0 0 0-2.6-7.1 6 6 0 0 0-11.2 2.2A3.6 3.6 0 0 0 4 17.5z" />
+                    </svg>
+                    <div class="mm">2 mm</div>
+                  </div>
+                  <div class="wx-day wet">
+                    <div class="dw">Thu</div>
+                    <svg viewBox="0 0 24 24">
+                      <path d="M16 13.5A4.5 4.5 0 0 0 13 5.5a6 6 0 0 0-11.2 2.2A3.6 3.6 0 0 0 3 14.5" />
+                      <path d="M8 17.5v3M12 16v4.5M16 17.5v3" />
+                    </svg>
+                    <div class="mm">24 mm</div>
+                  </div>
+                  <div class="wx-day">
+                    <div class="dw">Fri</div>
+                    <svg viewBox="0 0 24 24">
+                      <path d="M17 17.5a4 4 0 0 0-2.6-7.1 6 6 0 0 0-11.2 2.2A3.6 3.6 0 0 0 4 17.5z" />
+                    </svg>
+                    <div class="mm">3 mm</div>
+                  </div>
+                  <div class="wx-day">
+                    <div class="dw">Sat</div>
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="4.4" />
+                      <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5.6 5.6 4.2 4.2M19.8 19.8l-1.4-1.4M5.6 18.4 4.2 19.8M19.8 4.2l-1.4 1.4" />
+                    </svg>
+                    <div class="mm">0 mm</div>
+                  </div>
+                </div>
+
+                <div class="moved-card">
+                  <div class="t" style="font-size:15px;font-weight:800;color:var(--saffron-700)"
+                    data-i18n="wxMovedT">148 bookings were moved</div>
+                  <div style="font-size:13.5px;color:var(--earth-600);line-height:1.5;margin-top:4px"
+                    data-i18n="wxMovedD">Every affected farmer got a WhatsApp message with the new date. No one loses
+                    their place.</div>
+                  <div class="moved-row">
+                    <span class="old">27 Aug</span>
+                    <span class="arw">&rarr;</span>
+                    <span class="new">28 Aug, same time</span>
+                  </div>
+                </div>
+
+                <div class="waitlist-card">
+                  <div class="t" data-i18n="wxYoursT">Your booking is safe</div>
+                  <div class="d" data-i18n="wxYoursD">You are booked for 25 August, before the rain. Nothing has
+                    changed for you.</div>
+                </div>
+              </div>
+
+              <!-- ======== 04 · WHATSAPP NOTIFICATIONS ======== -->
+              <div class="screen" id="scr-alerts">
+                <div style="height:12px"></div>
+                <div class="scr-title" data-i18n="alertsTitle">Your messages</div>
+                <div class="scr-sub" data-i18n="alertsSub">Everything below was also sent to you on WhatsApp.</div>
+
+                <div class="chan-row">
+                  <div class="chan on" data-i18n="chWhatsapp">WhatsApp</div>
+                  <div class="chan" data-i18n="chSms">SMS backup</div>
+                  <div class="chan" data-i18n="chVoice">Voice call</div>
+                </div>
+
+                <div class="chat" id="alertsChat">
+                  <div class="chat-day" data-i18n="today">Today</div>
+
+                  <div class="bubble">
+                    <div class="hd">Kissan Setu</div>
+                    <p data-i18n="msg1">Namaste Ramesh ji. Your slot at <b>Karnal Mandi</b> is confirmed for
+                      <b>25 Aug, 11:00 AM</b>. Your token is <b>A-042</b>. Show the QR at Gate 2.</p>
+                    <div class="tm">8:02 AM</div>
+                  </div>
+
+                  <div class="bubble">
+                    <div class="hd">Kissan Setu</div>
+                    <p data-i18n="msg2">Reminder: your slot is in <b>2 hours</b>. Please reach Gate 2 by 10:50 AM.
+                      Current wait at the centre is about 35 minutes.</p>
+                    <div class="tm">9:00 AM</div>
+                  </div>
+
+                  <div class="bubble">
+                    <div class="hd">Kissan Setu</div>
+                    <p data-i18n="msg3">Your lot <b>#KRL-2291</b> has been graded. Result: <b>Grade A</b>, moisture
+                      11.2%. Weighing is next.</p>
+                    <div class="tm">11:26 AM</div>
+                  </div>
+
+                  <div class="bubble">
+                    <div class="hd">Kissan Setu</div>
+                    <p data-i18n="msg4">Weather alert: heavy rain on <b>27 Aug</b>. Slots that day have moved to
+                      <b>28 Aug</b>. Your booking on 25 Aug is unchanged.</p>
+                    <div class="tm">11:31 AM</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ======== 12 · CANCEL & NO-SHOW ======== -->
+              <div class="screen" id="scr-cancel">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-token" data-tab="token">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="cancelTitle">Cancel this booking?</div>
+                <div class="scr-sub" data-i18n="cancelSub">Token A-042 &middot; 25 Aug, 11:00 AM &middot; Karnal Mandi
+                </div>
+
+                <div class="policy-card">
+                  <div class="policy-row">
+                    <span class="ic ok">&#10003;</span>
+                    <span class="tx" data-i18n="pol1"><b>Cancel before 9:00 AM</b> and there is no penalty. Your slot
+                      goes to the next farmer waiting.</span>
+                  </div>
+                  <div class="policy-row">
+                    <span class="ic no">!</span>
+                    <span class="tx" data-i18n="pol2"><b>If you do not come</b> without cancelling, it is marked a
+                      no-show. Three no-shows in a season and booking is paused for 7 days.</span>
+                  </div>
+                  <div class="policy-row">
+                    <span class="ic ok">&#10003;</span>
+                    <span class="tx" data-i18n="pol3"><b>Running late?</b> Tell us instead of cancelling and we will
+                      hold your place for 30 minutes.</span>
+                  </div>
+                </div>
+
+                <div class="waitlist-card">
+                  <div class="t" data-i18n="wlT">4 farmers are on the waitlist</div>
+                  <div class="d" data-i18n="wlD">If you cancel, your 11:00 AM slot is offered to Kamla Yadav within a
+                    minute, on WhatsApp. Nothing goes to waste.</div>
+                </div>
+
+                <button class="btn ghost" style="border-color:#f0c4b4;color:var(--clay-600)" id="doCancelBtn"
+                  data-i18n="confirmCancel">Yes, cancel my booking</button>
+                <div style="height:10px"></div>
+                <button class="btn" id="lateBtn" data-goto="scr-token" data-tab="token">
+                  <span data-i18n="runningLate">I am running late, hold my place</span>
+                </button>
+                <div class="scan-result" id="cancelResult" style="margin-top:14px"></div>
+              </div>
+
+              <!-- ======== 11 · LANGUAGE & SETTINGS ======== -->
+              <div class="screen" id="scr-settings">
+                <div style="height:12px"></div>
+                <button class="back-link" data-goto="scr-home" data-tab="home">&#8592; <span
+                    data-i18n="back">Back</span></button>
+                <div class="scr-title" data-i18n="setTitle">Language</div>
+                <div class="scr-sub" data-i18n="setSub">The whole app and all WhatsApp messages will use this
+                  language.</div>
+
+                <button class="opt-row on" data-lang="en">
+                  <span>
+                    <span class="native">English</span>
+                    <span class="roman" style="display:block">English</span>
+                  </span>
+                  <span class="radio"></span>
+                </button>
+                <button class="opt-row" data-lang="hi">
+                  <span>
+                    <span class="native">हिन्दी</span>
+                    <span class="roman" style="display:block">Hindi</span>
+                  </span>
+                  <span class="radio"></span>
+                </button>
+                <button class="opt-row" data-lang="pa">
+                  <span>
+                    <span class="native">ਪੰਜਾਬੀ</span>
+                    <span class="roman" style="display:block">Punjabi</span>
+                  </span>
+                  <span class="radio"></span>
+                </button>
+
+                <p class="hint" data-i18n="setMore">Marathi, Telugu, Tamil, Bengali, Gujarati, Kannada and Odia are
+                  added the same way, by dropping in one more translation file.</p>
+                <button class="btn ghost" id="logoutBtn" style="margin-top:18px" data-i18n="logout">Log out</button>
+              </div>
+
+            </div><!-- /phone-body -->
+
+            <nav class="tabbar" id="tabbar">
+              <button class="tab on" data-tab="home" data-goto="scr-home">
+                <svg viewBox="0 0 24 24">
+                  <path d="M3 10.5 12 3l9 7.5" />
+                  <path d="M5 9.5V21h14V9.5" />
+                </svg>
+                <span data-i18n="tabHome">Home</span>
+              </button>
+              <button class="tab" data-tab="book" data-goto="scr-crop">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="16" rx="2.4" />
+                  <path d="M3 10h18M8 3v4M16 3v4" />
+                </svg>
+                <span data-i18n="tabBook">Book</span>
+              </button>
+              <button class="tab" data-tab="token" data-goto="scr-token">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="7" height="7" rx="1.4" />
+                  <rect x="14" y="3" width="7" height="7" rx="1.4" />
+                  <rect x="3" y="14" width="7" height="7" rx="1.4" />
+                  <path d="M14 14h3v3h-3zM19 19h2v2h-2z" />
+                </svg>
+                <span data-i18n="tabToken">Token</span>
+              </button>
+              <button class="tab" data-tab="track" data-goto="scr-track">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" />
+                </svg>
+                <span data-i18n="tabTrack">Track</span>
+              </button>
+              <button class="tab" data-tab="alerts" data-goto="scr-alerts">
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4L3 21l1.1-3.3A8.4 8.4 0 1 1 21 11.5z" />
+                </svg>
+                <span data-i18n="tabAlerts">Messages</span>
+              </button>
+            </nav>
+
+            <div class="toast" id="toast" role="status" aria-live="polite">
+              <svg viewBox="0 0 24 24">
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              <span></span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= STAFF ================= -->
+    <section class="view" id="view-staff">
+      <div class="view-head">
+        <h1>Centre staff dashboard</h1>
+        <p id="staffSub">Karnal Mandi &middot; Gate 2 &middot; operator Suresh Kumar &middot; 25 August 2026</p>
+      </div>
+
+      <div class="offline-bar" id="offlineBar"></div>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="lbl">Booked today</div>
+          <div class="val" id="statBooked">86</div>
+          <div class="sub">across 8 slots</div>
+        </div>
+        <div class="stat accent">
+          <div class="lbl">In queue now</div>
+          <div class="val" id="statQueue">6</div>
+          <div class="sub">average wait ~35 min</div>
+        </div>
+        <div class="stat">
+          <div class="lbl">Completed</div>
+          <div class="val" id="statDone">41</div>
+          <div class="sub">1,720 qtl accepted</div>
+        </div>
+        <div class="stat">
+          <div class="lbl">No-shows</div>
+          <div class="val" id="statNoShow">4</div>
+          <div class="sub">seats released to waitlist</div>
+        </div>
+      </div>
+
+      <div class="cols-2">
+        <div class="card">
+          <div class="card-head">
+            <h2>Today's queue</h2>
+            <span class="sub">Change a stage to move the farmer along</span>
+          </div>
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Farmer</th>
+                <th>Crop</th>
+                <th>Slot</th>
+                <th>Stage</th>
+                <th>Update</th>
+              </tr>
+            </thead>
+            <tbody id="queueBody"></tbody>
+          </table>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:20px">
+            <div class="card-head">
+              <h2>Scan token at gate</h2>
+            </div>
+            <div class="card-body">
+              <div class="scan-box">
+                <input class="input" id="scanInput" placeholder="Scan QR or type token, e.g. A-042" />
+                <button class="btn" id="scanBtn">Check in</button>
+              </div>
+              <div class="scan-result" id="scanResult"></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:20px">
+            <div class="card-head">
+              <h2>Waitlist</h2>
+              <span class="sub">Freed slots go here first</span>
+            </div>
+            <div class="card-body" id="waitlistBox"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h2>Slot capacity today</h2>
+            </div>
+            <div class="card-body" id="slotCapacity"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ADMIN ================= -->
+    <section class="view" id="view-admin">
+      <div class="view-head">
+        <h1>District congestion dashboard</h1>
+        <p id="adminSub">Karnal district &middot; 6 procurement centres &middot; live</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat">
+          <div class="lbl">Farmers served today</div>
+          <div class="val" id="adminServed">1,284</div>
+          <div class="sub" id="adminServedSub">+18% vs last Tuesday</div>
+        </div>
+        <div class="stat accent">
+          <div class="lbl">Average wait</div>
+          <div class="val" id="adminWait">38 min</div>
+          <div class="sub">was 5h 40m before Kissan Setu</div>
+        </div>
+        <div class="stat">
+          <div class="lbl">Slot utilisation</div>
+          <div class="val" id="adminUtil">91%</div>
+          <div class="sub">4% lost to no-shows</div>
+        </div>
+        <div class="stat">
+          <div class="lbl">Payments pending</div>
+          <div class="val" id="adminPay">137</div>
+          <div class="sub">&#8377; 3.2 Cr awaiting DBT</div>
+        </div>
+      </div>
+
+      <div class="cols-2">
+        <div class="card">
+          <div class="card-head">
+            <h2>Centre load right now</h2>
+            <span class="sub">Tap a centre to cap or open extra slots</span>
+          </div>
+          <div id="adminCentres"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Alerts</h2>
+          </div>
+          <div class="card-body" id="adminAlerts">
+            <div class="alert-item crit">
+              <div class="bar-i"></div>
+              <div>
+                <div class="t">Nilokheri centre is over capacity</div>
+                <div class="d">Wait crossed 2 hours. Suggest moving 20 unbooked slots to Taraori, 9 km away.</div>
+                <div class="tm">4 minutes ago</div>
+              </div>
+            </div>
+            <div class="alert-item warn">
+              <div class="bar-i"></div>
+              <div>
+                <div class="t">Rain forecast for 27 August</div>
+                <div class="d">IMD predicts 24 mm. 148 slots auto-moved to 28 August, farmers notified on WhatsApp.
+                </div>
+                <div class="tm">1 hour ago</div>
+              </div>
+            </div>
+            <div class="alert-item info">
+              <div class="bar-i"></div>
+              <div>
+                <div class="t">Assandh running below capacity</div>
+                <div class="d">Only 46% of slots booked. Consider promoting it to nearby villages.</div>
+                <div class="tm">2 hours ago</div>
+              </div>
+            </div>
+            <div class="alert-item warn">
+              <div class="bar-i"></div>
+              <div>
+                <div class="t">12 payments delayed beyond 72 hours</div>
+                <div class="d">Flagged to the district treasury for follow-up.</div>
+                <div class="tm">Today, 9:15 AM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="card-head">
+          <h2>Arrivals by hour &mdash; all centres</h2>
+          <span class="sub">Slot booking flattens the morning rush</span>
+        </div>
+        <div class="card-body">
+          <div class="chart" id="hourChart"></div>
+          <div class="legend">
+            <div><i style="background:var(--leaf-600)"></i> Normal load</div>
+            <div><i style="background:var(--saffron-600)"></i> Peak hour &mdash; extra counters opened</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="mock.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
