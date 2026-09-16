@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: kissan-setu-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: TOKEN_TTL_HOURS
+        value: "72"
+      - key: OTP_LENGTH
+        value: "4"
+      - key: OTP_TTL_SEC
+        value: "300"
+      - key: OTP_RESEND_SEC
+        value: "24"
+      - key: WA_DRY_RUN
+        value: "false"
+      - key: WA_VERSION
+        value: "v23.0"
+      - key: WA_TEMPLATE_LANG
+        value: "en"
+      # Secrets and approved template names — never given a `value` here so
+      # Render always prompts for them by hand in its dashboard and never
+      # stores them in this file / the repo.
+      - key: WA_API_BASE_URL
+        sync: false
+      - key: WA_PHONE_NUMBER_ID
+        sync: false
+      - key: WA_WABA_ID
+        sync: false
+      - key: WA_API_KEY
+        sync: false
+      - key: WA_TEMPLATE_OTP
+        sync: false
+      - key: WA_TEMPLATE_BOOKING_CONFIRMED
+        sync: false
+      - key: WA_TEMPLATE_BOOKING_CANCELLED
+        sync: false

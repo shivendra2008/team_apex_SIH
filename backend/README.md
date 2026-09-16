@@ -98,6 +98,33 @@ structure each one is wrapped in):
 | Booking confirmed | `WA_TEMPLATE_BOOKING_CONFIRMED` | header: `[farmerName]`, body: `[token, dateLabel, slotLabel, centreName, cropsLabel]` |
 | Booking cancelled | `WA_TEMPLATE_BOOKING_CANCELLED` | header: `[farmerName]`, body: `[token, dateLabel]` |
 
+## Deploying (so it's live, not just local)
+
+GitHub itself only serves static files — the frontend can go on GitHub Pages, but this
+FastAPI backend needs an actual server host with its own environment-variable secrets
+store. [`render.yaml`](../render.yaml) at the repo root is a ready-to-use blueprint for
+[Render](https://render.com):
+
+1. Push this repo to GitHub (secrets are already excluded — see above).
+2. On Render: **New +** → **Blueprint** → connect this GitHub repo. Render reads
+   `render.yaml` automatically.
+3. It will list several env vars with no value and ask you to fill them in by hand
+   (`WA_API_BASE_URL`, `WA_PHONE_NUMBER_ID`, `WA_WABA_ID`, `WA_API_KEY`, and the three
+   `WA_TEMPLATE_*` names) — paste in the same values you have in your local `.env`.
+   These are stored only in Render's own secret store, never in the repo.
+4. Deploy. Render gives you a `https://kissan-setu-backend-xxxx.onrender.com` URL.
+5. Point the frontend at it — either edit [`frontend/config.js`](../frontend/config.js)
+   (`apiBase: "https://<your-render-url>/api/v1"`, `useMock: false`) before deploying the
+   frontend (e.g. to GitHub Pages), or override it at runtime if you add that later.
+6. Add that Render URL's origin to `CORS_ORIGINS` in Render's env vars (it defaults to
+   `*` here, which works but is permissive — tighten it once you know the frontend's
+   real origin).
+
+Any other host that runs a Python web service (Railway, Fly.io, a VPS, etc.) works the
+same way in spirit: install `backend/requirements.txt`, run
+`uvicorn app.main:app --host 0.0.0.0 --port $PORT`, and set the same env vars as secrets
+in that platform's dashboard — never in a file that gets committed.
+
 ## Notes on the auth model
 
 Tokens issued by `/auth/verify-otp` are plain random strings mapped to a mobile number in an

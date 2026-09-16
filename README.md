@@ -20,9 +20,10 @@ Exact request and response examples live in **[API.md](API.md)**. Read that file
 A FastAPI server now lives in `backend/`, implementing auth (`send-otp` / `verify-otp`) and
 the booking flow (`bookings`, `bookings/current`, `cancel`), with **WhatsApp Business API**
 wired in for OTP delivery and booking confirmation/cancellation messages. See
-[backend/README.md](backend/README.md) for how to run it and how to plug in your BSP
-credentials once you have the API document. Everything else in the table below is still
-mock-only.
+[backend/README.md](backend/README.md) for how to run it, how the WhatsApp credentials and
+approved template names are kept out of source control (`.env`, git-ignored), and how to
+deploy it live via the [`render.yaml`](render.yaml) blueprint. Everything else in the table
+below is still mock-only.
 
 ## For the backend developer
 
